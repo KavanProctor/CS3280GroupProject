@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+using CS3280GroupProject.Items;
+using CS3280GroupProject.Search;
+
 namespace CS3280GroupProject.Main
 {
     /// <summary>
@@ -19,9 +23,30 @@ namespace CS3280GroupProject.Main
     /// </summary>
     public partial class MainWindow : Window
     {
+        private SearchWindow? searchWnd;
+        private ItemWindow? itemWnd;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            this.Closing += delegate (object? sender, CancelEventArgs ev){
+                this.itemWnd?.Close();
+                this.searchWnd?.Close();
+            };
+        }
+
+        private void UpdateItems(object sender, EventArgs ev)
+        {
+            this.itemWnd?.Close();
+            this.itemWnd = new ItemWindow();
+            this.itemWnd.ShowDialog();
+        }
+        private void SelectInvoice(object sender, EventArgs ev)
+        {
+            this.searchWnd?.Close();
+            this.searchWnd = new SearchWindow();
+            this.searchWnd.ShowDialog();
         }
     }
 }

@@ -8,8 +8,8 @@
         Title="MainWindow" Height="450" Width="800">
     <StackPanel>
         <Menu>
-            <MenuItem Header="Update items"/>
-            <MenuItem Header="Select invoice"/>
+            <MenuItem Header="Update items" Click="UpdateItems"/>
+            <MenuItem Header="Select invoice" Click="SelectInvoice"/>
         </Menu>
         <GroupBox Width="Auto" Header="Invoice">
             <Grid>
