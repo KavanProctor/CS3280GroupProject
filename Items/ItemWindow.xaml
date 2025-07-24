@@ -6,7 +6,15 @@
         xmlns:local="clr-namespace:CS3280GroupProject.Items"
         mc:Ignorable="d"
         Title="ItemWindow" Height="450" Width="800">
-    <Grid>
-        
+    <Grid x:Name="itemDataGird">
+        <Label x:Name="itemCodeLabel" Content="Code:" HorizontalAlignment="Left" Margin="26,32,0,0" VerticalAlignment="Top" Width="76"/>
+        <Label x:Name="itemCostLabel" Content="Cost:" HorizontalAlignment="Left" Margin="26,75,0,0" VerticalAlignment="Top" Width="76"/>
+        <Label x:Name="itemDescriptionLabel" Content="Description:" HorizontalAlignment="Left" Margin="26,117,0,0" VerticalAlignment="Top" Width="76"/>
+        <Button x:Name="itemAddButton" Content="Add Item" HorizontalAlignment="Left" Margin="26,193,0,0" VerticalAlignment="Top" Height="39" Width="78"/>
+        <Button x:Name="itemDeleteButton" Content="Delete Item" HorizontalAlignment="Left" Margin="132,193,0,0" VerticalAlignment="Top" Height="39" Width="78"/>
+        <Button x:Name="itemEditButton" Content="Edit Item" HorizontalAlignment="Left" Margin="26,248,0,0" VerticalAlignment="Top" Height="39" Width="78"/>
+        <Button x:Name="itemSaveButton" Content="Save Item" HorizontalAlignment="Left" Margin="132,248,0,0" VerticalAlignment="Top" Height="39" Width="78"/>
+        <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" Margin="316,0,0,147"/>
+
     </Grid>
 </Window>

@@ -23,5 +23,8 @@ namespace CS3280GroupProject.Items
         {
             InitializeComponent();
         }
+
+        //bool hasItemBeenChanged //Set to true when item has been added/edited/deleted
+        //bool bHasItemBeenChanged //property
     }
 }
