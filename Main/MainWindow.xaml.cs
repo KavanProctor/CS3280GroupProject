@@ -41,12 +41,16 @@ namespace CS3280GroupProject.Main
             this.itemWnd?.Close();
             this.itemWnd = new ItemWindow();
             this.itemWnd.ShowDialog();
+
+            // TODO: check this.itemWnd.bHasItemBeenChanged and if its true then update the items combo box by updating its ItemsSource according to clsMainLogic.GetInvoice().Items
         }
         private void SelectInvoice(object sender, EventArgs ev)
         {
             this.searchWnd?.Close();
             this.searchWnd = new SearchWindow();
             this.searchWnd.ShowDialog();
+
+            // TODO: get the invoice number with something like this.searchWnd.GetSelected() and then fill the invoice form with data pertaining to that invoice if it is not null
         }
     }
 }
