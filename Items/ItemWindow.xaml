@@ -10,11 +10,14 @@
         <Label x:Name="itemCodeLabel" Content="Code:" HorizontalAlignment="Left" Margin="26,32,0,0" VerticalAlignment="Top" Width="76"/>
         <Label x:Name="itemCostLabel" Content="Cost:" HorizontalAlignment="Left" Margin="26,75,0,0" VerticalAlignment="Top" Width="76"/>
         <Label x:Name="itemDescriptionLabel" Content="Description:" HorizontalAlignment="Left" Margin="26,117,0,0" VerticalAlignment="Top" Width="76"/>
-        <Button x:Name="itemAddButton" Content="Add Item" HorizontalAlignment="Left" Margin="26,193,0,0" VerticalAlignment="Top" Height="39" Width="78"/>
-        <Button x:Name="itemDeleteButton" Content="Delete Item" HorizontalAlignment="Left" Margin="132,193,0,0" VerticalAlignment="Top" Height="39" Width="78"/>
-        <Button x:Name="itemEditButton" Content="Edit Item" HorizontalAlignment="Left" Margin="26,248,0,0" VerticalAlignment="Top" Height="39" Width="78"/>
-        <Button x:Name="itemSaveButton" Content="Save Item" HorizontalAlignment="Left" Margin="132,248,0,0" VerticalAlignment="Top" Height="39" Width="78"/>
+        <Button x:Name="itemAddButton" Content="Add Item" HorizontalAlignment="Left" Margin="26,193,0,0" VerticalAlignment="Top" Height="39" Width="78" Click="itemAddButton_Click"/>
+        <Button x:Name="itemDeleteButton" Content="Delete Item" HorizontalAlignment="Left" Margin="132,193,0,0" VerticalAlignment="Top" Height="39" Width="78" Click="itemDeleteButton_Click"/>
+        <Button x:Name="itemEditButton" Content="Edit Item" HorizontalAlignment="Left" Margin="26,248,0,0" VerticalAlignment="Top" Height="39" Width="78" Click="itemEditButton_Click"/>
+        <Button x:Name="itemSaveButton" Content="Save Item" HorizontalAlignment="Left" Margin="132,248,0,0" VerticalAlignment="Top" Height="39" Width="78" Click="itemSaveButton_Click" IsEnabled="False"/>
         <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" Margin="316,0,0,147"/>
+        <TextBox x:Name="itemCodeTextBox" HorizontalAlignment="Left" Margin="107,36,0,0" TextWrapping="Wrap" Text="Code" VerticalAlignment="Top" Width="159" Background="#FFBD9C00" IsEnabled="False"/>
+        <TextBox x:Name="itemCostTextBox" HorizontalAlignment="Left" Margin="107,83,0,0" TextWrapping="Wrap" Text="Cost" VerticalAlignment="Top" Width="159" Background="#FFBD9C00" IsEnabled="False"/>
+        <TextBox x:Name="itemDescriptionTextBox" HorizontalAlignment="Left" Margin="107,121,0,0" TextWrapping="Wrap" Text="Description" VerticalAlignment="Top" Width="159" Background="#FFBD9C00" IsEnabled="False"/>
 
     </Grid>
 </Window>
