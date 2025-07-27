@@ -38,17 +38,17 @@ namespace CS3280GroupProject.Main
 
         private void UpdateItems(object sender, EventArgs ev)
         {
-            this.itemWnd?.Close();
-            this.itemWnd = new ItemWindow();
-            this.itemWnd.ShowDialog();
+            ItemWindow itemWnd = new ItemWindow();
+            itemWnd.Show();
+            this.Close();
 
             // TODO: check this.itemWnd.bHasItemBeenChanged and if its true then update the items combo box by updating its ItemsSource according to clsMainLogic.GetInvoice().Items
         }
         private void SelectInvoice(object sender, EventArgs ev)
         {
-            this.searchWnd?.Close();
-            this.searchWnd = new SearchWindow();
-            this.searchWnd.ShowDialog();
+            SearchWindow searchWnd = new SearchWindow();
+            searchWnd.Show();
+            this.Close();
 
             // TODO: get the invoice number with something like this.searchWnd.GetSelected() and then fill the invoice form with data pertaining to that invoice if it is not null
         }

@@ -6,18 +6,23 @@
         xmlns:local="clr-namespace:CS3280GroupProject.Items"
         mc:Ignorable="d"
         Title="ItemWindow" Height="450" Width="800">
-    <Grid x:Name="itemDataGird">
-        <Label x:Name="itemCodeLabel" Content="Code:" HorizontalAlignment="Left" Margin="26,32,0,0" VerticalAlignment="Top" Width="76"/>
-        <Label x:Name="itemCostLabel" Content="Cost:" HorizontalAlignment="Left" Margin="26,75,0,0" VerticalAlignment="Top" Width="76"/>
-        <Label x:Name="itemDescriptionLabel" Content="Description:" HorizontalAlignment="Left" Margin="26,117,0,0" VerticalAlignment="Top" Width="76"/>
+
+    <Grid x:Name="itemDataGird" Margin="0,0,0,-6">
+        <Menu VerticalAlignment="Top" Height="24" Margin="0,10,0,0">
+            <MenuItem Header="Main menu" Click="mainMenu"/>
+            <MenuItem Header="Select invoice" Click="SelectInvoice"/>
+        </Menu>
+        <Label x:Name="itemCodeLabel" Content="Code:" HorizontalAlignment="Left" Margin="25,46,0,0" VerticalAlignment="Top" Width="76"/>
+        <Label x:Name="itemCostLabel" Content="Cost:" HorizontalAlignment="Left" Margin="25,89,0,0" VerticalAlignment="Top" Width="76"/>
+        <Label x:Name="itemDescriptionLabel" Content="Description:" HorizontalAlignment="Left" Margin="25,131,0,0" VerticalAlignment="Top" Width="76"/>
         <Button x:Name="itemAddButton" Content="Add Item" HorizontalAlignment="Left" Margin="26,193,0,0" VerticalAlignment="Top" Height="39" Width="78" Click="itemAddButton_Click"/>
         <Button x:Name="itemDeleteButton" Content="Delete Item" HorizontalAlignment="Left" Margin="132,193,0,0" VerticalAlignment="Top" Height="39" Width="78" Click="itemDeleteButton_Click"/>
         <Button x:Name="itemEditButton" Content="Edit Item" HorizontalAlignment="Left" Margin="26,248,0,0" VerticalAlignment="Top" Height="39" Width="78" Click="itemEditButton_Click"/>
         <Button x:Name="itemSaveButton" Content="Save Item" HorizontalAlignment="Left" Margin="132,248,0,0" VerticalAlignment="Top" Height="39" Width="78" Click="itemSaveButton_Click" IsEnabled="False"/>
-        <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" Margin="316,0,0,147"/>
-        <TextBox x:Name="itemCodeTextBox" HorizontalAlignment="Left" Margin="107,36,0,0" TextWrapping="Wrap" Text="Code" VerticalAlignment="Top" Width="159" Background="#FFBD9C00" IsEnabled="False"/>
-        <TextBox x:Name="itemCostTextBox" HorizontalAlignment="Left" Margin="107,83,0,0" TextWrapping="Wrap" Text="Cost" VerticalAlignment="Top" Width="159" Background="#FFBD9C00" IsEnabled="False"/>
-        <TextBox x:Name="itemDescriptionTextBox" HorizontalAlignment="Left" Margin="107,121,0,0" TextWrapping="Wrap" Text="Description" VerticalAlignment="Top" Width="159" Background="#FFBD9C00" IsEnabled="False"/>
+        <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" Margin="316,65,0,82"/>
+        <TextBox x:Name="itemCodeTextBox" HorizontalAlignment="Left" Margin="106,50,0,0" TextWrapping="Wrap" Text="Code" VerticalAlignment="Top" Width="159" Background="#FFBD9C00" IsEnabled="False"/>
+        <TextBox x:Name="itemCostTextBox" HorizontalAlignment="Left" Margin="106,97,0,0" TextWrapping="Wrap" Text="Cost" VerticalAlignment="Top" Width="159" Background="#FFBD9C00" IsEnabled="False"/>
+        <TextBox x:Name="itemDescriptionTextBox" HorizontalAlignment="Left" Margin="106,135,0,0" TextWrapping="Wrap" Text="Description" VerticalAlignment="Top" Width="159" Background="#FFBD9C00" IsEnabled="False"/>
 
     </Grid>
 </Window>

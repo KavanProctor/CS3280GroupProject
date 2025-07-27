@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using CS3280GroupProject.Main;
+using CS3280GroupProject.Search;
 
 namespace CS3280GroupProject.Items
 {
@@ -26,6 +28,10 @@ namespace CS3280GroupProject.Items
         private clsItemLogic itemLogic = new clsItemLogic();
         private bool bHasItemBeenChanged = false;
         public bool HasItemBeenChanged => bHasItemBeenChanged;
+
+        private SearchWindow? searchWnd;
+        private Main.MainWindow? MainWnd;
+        private ItemWindow? itemWnd;
 
         private void itemAddButton_Click(object sender, RoutedEventArgs e)
         {
@@ -54,6 +60,20 @@ namespace CS3280GroupProject.Items
 
             // Save new or updated item
             bHasItemBeenChanged = true;
+        }
+
+        private void mainMenu(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWnd = new MainWindow();
+            mainWnd.Show();
+            this.Close();
+        }
+
+        private void SelectInvoice(object sender, RoutedEventArgs e)
+        {
+            SearchWindow searchWnd = new SearchWindow();
+            searchWnd.Show();
+            this.Close();
         }
 
         //bool hasItemBeenChanged //Set to true when item has been added/edited/deleted
