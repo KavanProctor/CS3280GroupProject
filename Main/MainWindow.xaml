@@ -26,14 +26,14 @@
                 </Grid.RowDefinitions>
 
                 <Label Grid.Column="0" Grid.Row="0" HorizontalContentAlignment="Right" Content="Invoice number"/>
-                <TextBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Width="100" IsReadOnly="True" Text="TBD"/>
+                <TextBox x:Name="invoiceID" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Width="100" IsReadOnly="True" Text="TBD"/>
 
                 <Label Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Right" Content="Invoice date"/>
-                <TextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Width="100"/>
+                <DatePicker x:Name="invoiceDate" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Width="100"/>
 
                 <GroupBox Grid.ColumnSpan="2" Grid.Row="2" Width="Auto" Header="Items">
                     <StackPanel>
-                        <DataGrid Height="150">
+                        <DataGrid x:Name="invoiceItems" Height="150">
                         </DataGrid>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -44,15 +44,15 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <ComboBox Grid.Column="0">
+                            <ComboBox x:Name="itemSelection" Grid.Column="0">
                             </ComboBox>
-                            <Button Grid.Column="1" Content="Add item"/>
+                            <Button x:Name="addItemButton" Grid.Column="1" Content="Add item"/>
                         </Grid>
                     </StackPanel>
                 </GroupBox>
 
                 <Label Grid.Column="0" Grid.Row="3" HorizontalContentAlignment="Right" Content="Total cost"/>
-                <TextBox Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Width="100" IsReadOnly="True"/>
+                <TextBox x:Name="invoiceCost" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Width="100" IsReadOnly="True"/>
 
                 <Button Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="4" Content="Save"/>
             </Grid>
