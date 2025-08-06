@@ -64,8 +64,6 @@ namespace CS3280GroupProject.Items
 
         private void mainMenu(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWnd = new MainWindow();
-            mainWnd.Show();
             this.Close();
         }
 
