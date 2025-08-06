@@ -24,9 +24,12 @@ namespace CS3280GroupProject.Items
         public ItemWindow()
         {
             InitializeComponent();
+            List<clsItem> items = itemLogic.GetAllItems();
+            itemDataGrid.ItemsSource = itemLogic.GetAllItems();
         }
         private clsItemLogic itemLogic = new clsItemLogic();
         private bool bHasItemBeenChanged = false;
+        private clsItem? selectedItem = null;
         public bool HasItemBeenChanged => bHasItemBeenChanged;
 
         private SearchWindow? searchWnd;
@@ -35,8 +38,15 @@ namespace CS3280GroupProject.Items
 
         private void itemAddButton_Click(object sender, RoutedEventArgs e)
         {
-            //Logic for what happens when they want to add a item(probably display text fields and let them save)
-            //After they click add allow them to save
+            itemCodeTextBox.IsEnabled = true;
+            itemDescriptionTextBox.IsEnabled = true;
+            itemCostTextBox.IsEnabled = true;
+
+            itemCodeTextBox.Clear();
+            itemDescriptionTextBox.Clear();
+            itemCostTextBox.Clear();
+
+            itemSaveButton.IsEnabled = true;
         }
 
         private void itemDeleteButton_Click(object sender, RoutedEventArgs e)
@@ -46,21 +56,77 @@ namespace CS3280GroupProject.Items
 
         private void itemEditButton_Click(object sender, RoutedEventArgs e)
         {
-            //open the information on the row they selected and let them edit and save.
-            // turn save button on they dont need to verify this
+            if (selectedItem == null)
+            {
+                MessageBox.Show("Please select an item to edit.");
+                return;
+            }
+
+            // Load selected item details into text boxes
+            itemCodeTextBox.Text = selectedItem.ItemCode;
+            itemDescriptionTextBox.Text = selectedItem.ItemDesc;
+            itemCostTextBox.Text = selectedItem.Cost.ToString();
+
+            itemCodeTextBox.IsEnabled = false; // can't edit primary key
+            itemDescriptionTextBox.IsEnabled = true;
+            itemCostTextBox.IsEnabled = true;
+
+            itemSaveButton.IsEnabled = true;
         }
+
 
         private void itemSaveButton_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(itemCodeTextBox.Text) || string.IsNullOrWhiteSpace(itemDescriptionTextBox.Text) || string.IsNullOrWhiteSpace(itemCostTextBox.Text))
+            if (string.IsNullOrWhiteSpace(itemCodeTextBox.Text) ||
+                string.IsNullOrWhiteSpace(itemDescriptionTextBox.Text) ||
+                string.IsNullOrWhiteSpace(itemCostTextBox.Text))
             {
                 MessageBox.Show("Please fill in all fields.");
                 return;
             }
 
-            // Save new or updated item
-            bHasItemBeenChanged = true;
+            if (!decimal.TryParse(itemCostTextBox.Text, out decimal cost))
+            {
+                MessageBox.Show("Cost must be a valid number.");
+                return;
+            }
+
+            clsItem newItem = new clsItem
+            {
+                ItemCode = itemCodeTextBox.Text.Trim(),
+                ItemDesc = itemDescriptionTextBox.Text.Trim(),
+                Cost = cost
+            };
+
+            try
+            {
+                if (selectedItem == null)
+                {
+                    itemLogic.AddItem(newItem);
+                    MessageBox.Show("Item added successfully!");
+                }
+                else
+                {
+                    itemLogic.EditItem(selectedItem, newItem);
+                    MessageBox.Show("Item updated successfully!");
+                }
+
+                itemDataGrid.ItemsSource = itemLogic.GetAllItems(); // refresh grid
+                itemCodeTextBox.Clear();
+                itemDescriptionTextBox.Clear();
+                itemCostTextBox.Clear();
+
+                itemCodeTextBox.IsEnabled = false;
+                itemDescriptionTextBox.IsEnabled = false;
+                itemCostTextBox.IsEnabled = false;
+                itemSaveButton.IsEnabled = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error adding item: " + ex.Message);
+            }
         }
+
 
         private void mainMenu(object sender, RoutedEventArgs e)
         {
@@ -73,8 +139,12 @@ namespace CS3280GroupProject.Items
             searchWnd.Show();
             this.Close();
         }
-
-        //bool hasItemBeenChanged //Set to true when item has been added/edited/deleted
-        //bool bHasItemBeenChanged //property
+        private void itemDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (itemDataGrid.SelectedItem is clsItem item)
+            {
+                selectedItem = item;
+            }
+        }
     }
 }
