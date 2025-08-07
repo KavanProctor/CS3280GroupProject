@@ -136,7 +136,8 @@ namespace CS3280GroupProject.Items
         private void SelectInvoice(object sender, RoutedEventArgs e)
         {
             SearchWindow searchWnd = new SearchWindow();
-            searchWnd.Show();
+            this.Hide();
+            searchWnd.ShowDialog();
             this.Close();
         }
         private void itemDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)

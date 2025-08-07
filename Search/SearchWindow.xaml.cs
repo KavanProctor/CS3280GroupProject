@@ -50,7 +50,8 @@ namespace CS3280GroupProject.Search
         private void UpdateItems(object sender, EventArgs ev)
         {
             ItemWindow itemWnd = new ItemWindow();
-            itemWnd.Show();
+            this.Hide();
+            itemWnd.ShowDialog();
             this.Close();
         }
 
