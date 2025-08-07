@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CS3280GroupProject.Items;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,20 @@ namespace CS3280GroupProject.Search
         public SearchWindow()
         {
             InitializeComponent();
+        }
+
+        // SelectedInvoiceID - Holds the invoice Id if the user selected one, and zero if no invoice selected
+
+        private void UpdateItems(object sender, EventArgs ev)
+        {
+            ItemWindow itemWnd = new ItemWindow();
+            itemWnd.Show();
+            this.Close();
+        }
+
+        private void mainMenu(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
