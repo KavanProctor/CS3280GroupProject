@@ -7,20 +7,12 @@ using System.Reflection;
     /// <summary>
     /// Class used to access the database.
     /// </summary>
-	public class clsDataAccess
+	public static class clsDataAccess
 	{
-        /// <summary>
-        /// Connection string to the database.
-        /// </summary>
-        private string sConnectionString;
-
-        /// <summary>
-        /// Constructor that sets the connection string to the database
-        /// </summary>
-		public clsDataAccess()
-		{
-            sConnectionString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data source= " + Directory.GetCurrentDirectory() + "\\Invoice.mdb";
-		}
+    /// <summary>
+    /// Connection string to the database.
+    /// </summary>
+    private static string sConnectionString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data source= " + Directory.GetCurrentDirectory() + "\\Invoice.mdb";
 
         /// <summary>
         /// This method takes an SQL statment that is passed in and executes it.  The resulting values
@@ -30,7 +22,7 @@ using System.Reflection;
         /// <param name="sSQL">The SQL statement to be executed.</param>
         /// <param name="iRetVal">Reference parameter that returns the number of selected rows.</param>
         /// <returns>Returns a DataSet that contains the data from the SQL statement.</returns>
-		public DataSet ExecuteSQLStatement(string sSQL, ref int iRetVal)
+		public static DataSet ExecuteSQLStatement(string sSQL, ref int iRetVal)
 		{
 			try
 			{
@@ -72,7 +64,7 @@ using System.Reflection;
         /// </summary>
         /// <param name="sSQL">The SQL statement to be executed.</param>
         /// <returns>Returns a string from the scalar SQL statement.</returns>
-		public string ExecuteScalarSQL(string sSQL)
+		public static string ExecuteScalarSQL(string sSQL)
 		{
 			try
 			{
@@ -119,7 +111,7 @@ using System.Reflection;
         /// </summary>
         /// <param name="sSQL">The SQL statement to be executed.</param>
         /// <returns>Returns the number of rows affected by the SQL statement.</returns>
-		public int ExecuteNonQuery(string sSQL)
+		public static int ExecuteNonQuery(string sSQL)
 		{
 			try
 			{
