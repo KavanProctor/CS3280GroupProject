@@ -54,6 +54,7 @@ namespace CS3280GroupProject.Main
             this.itemsBuffer.Clear();
 
             this.invoiceID.Text = "TBD";
+            this.invoiceDate.Text = "";
 
             this.SyncUI();
         }
@@ -88,35 +89,44 @@ namespace CS3280GroupProject.Main
             this.invoiceCost.Text = this.cost.ToString();
         }
 
+        private bool WarnUser()
+        {
+            if(this.invoiceDate.Text != "" || this.itemsBuffer.Count > 0){
+                var response = MessageBox.Show("The current invoice will be lost, do you wish to continue?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                return response == MessageBoxResult.Yes;
+            }
+            return true;
+        }
+
         private void UpdateItems(object sender, EventArgs ev)
         {
-            // NOTE: the requirements say that the items window cannot be opened if an invoice is being created/edited (which thankfully makes everything much simpler)
-            // TODO: either prevent the items window from opening (when appropriate) or confirm that the user is okay with losing unsaved info
+            if(!WarnUser()) return;
 
             ItemWindow itemWnd = new ItemWindow();
             this.Hide();
             itemWnd.ShowDialog();
             this.Show();
 
-            // TODO: check this.itemWnd.bHasItemBeenChanged and if its true then update the items combo box by updating its ItemsSource according to clsMainLogic.GetInvoice().Items
-            // NOTE: this todo can probably be ignored? just always call this.Reset ...
-
             this.Reset();
         }
         private void SelectInvoice(object sender, EventArgs ev)
         {
+            if(!WarnUser()) return;
+
             SearchWindow searchWnd = new SearchWindow();
             this.Hide();
             searchWnd.ShowDialog();
             this.Show();
 
-            // TODO: get the invoice number with something like this.searchWnd.GetSelected() and then fill the invoice form with data pertaining to that invoice if it is not null
+            this.Reset();
+
+            // TODO: use searchWnd.selectedInvoice.InvoiceID to edit invoice (how to check if one was actually selected?)
         }
 
         private void SaveInvoice(object sender, EventArgs ev)
         {
             if(this.invoiceDate.Text == "" || this.itemsBuffer.Count == 0){
-                MessageBox.Show("invalid input");
+                MessageBox.Show("Please create a valid invoice", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
