@@ -2,18 +2,18 @@ namespace CS3280GroupProject.Main
 {
     public class clsMainSQL
     {
-        private static string GetMaxLineNum(int invoiceID)
+        public static string GetMaxLineNum(int invoiceID)
         {
-            return $"SELECT NZ(MAX(LineItemNum), 0) FROM LineItems WHERE InvoiceNum = {invoiceID}";
+            return $"SELECT MAX(LineItemNum) FROM LineItems WHERE InvoiceNum = {invoiceID}";
         }
         
-        private static string ComputeCost(int invoiceID)
+        public static string ComputeCost(int invoiceID)
         {
-            return $"SELECT SUM(i.Cost) FROM LineItems l INNER JOIN ItemDesc i ON l.InvoiceNum = i.InvoiceNum WHERE l.InvoiceNum = {invoiceID}";
+            return $"SELECT SUM(i.Cost) FROM LineItems l INNER JOIN ItemDesc i ON l.ItemCode = i.ItemCode WHERE l.InvoiceNum = {invoiceID}";
         }
-        private static string UpdateCost(int invoiceID)
+        public static string UpdateCost(int invoiceID, decimal cost)
         {
-            return $"UPDATE Invoices SET TotalCost = ({ComputeCost(invoiceID)}) WHERE InvoiceNum = {invoiceID}";
+            return $"UPDATE Invoices SET TotalCost = {cost} WHERE InvoiceNum = {invoiceID}";
         }
 
         public static string GetLatestInvoiceID()
@@ -21,9 +21,9 @@ namespace CS3280GroupProject.Main
             return $"SELECT MAX(InvoiceNum) FROM Invoices";
         }
 
-        public static string CreateInvoice(string date)
+        public static string CreateInvoice(string date, decimal cost)
         {
-            return $"INSERT INTO Invoices (InvoiceDate, TotalCost) VALUES (#{date}#, 0)";
+            return $"INSERT INTO Invoices (InvoiceDate, TotalCost) VALUES (#{date}#, {cost})";
         }
         public static string GetInvoice(int invoiceID)
         {
@@ -31,16 +31,20 @@ namespace CS3280GroupProject.Main
         }
         public static string RemoveInvoice(int invoiceID)
         {
-            return $"DELETE FROM LineItems WHERE InvoiceNum = {invoiceID}" + Environment.NewLine + $"DELETE FROM Invoices WHERE InvoiceNum = {invoiceID}";
+            return $"DELETE FROM Invoices WHERE InvoiceNum = {invoiceID}";
+        }
+        public static string RemoveInvoiceItems(int invoiceID)
+        {
+            return $"DELETE FROM LineItems WHERE InvoiceNum = {invoiceID}";
         }
         public static string SetInvoiceDate(int invoiceID, string date)
         {
             return $"UPDATE Invoices SET InvoiceDate = #{date}# WHERE InvoiceNum = {invoiceID}";
         }
 
-        public static string AddItemToInvoice(int invoiceID, string itemCode)
+        public static string AddItemToInvoice(int invoiceID, string itemCode, int line)
         {
-            return $"INSERT INTO LineItems (InvoiceNum, LineItemNum, ItemCode) VALUES ({invoiceID}, ({GetMaxLineNum(invoiceID)}) + 1, '{itemCode}')" + Environment.NewLine + UpdateCost(invoiceID);
+            return $"INSERT INTO LineItems (InvoiceNum, LineItemNum, ItemCode) VALUES ({invoiceID}, {line}, '{itemCode}')";
         }
         public static string GetInvoiceItems(int invoiceID)
         {
@@ -48,7 +52,7 @@ namespace CS3280GroupProject.Main
         }
         public static string RemoveItemFromInvoice(int invoiceID, string itemCode)
         {
-            return $"DELETE FROM LineItems WHERE InvoiceNum = {invoiceID} AND ItemCode = '{itemCode}'" + Environment.NewLine + UpdateCost(invoiceID);
+            return $"DELETE FROM LineItems WHERE InvoiceNum = {invoiceID} AND ItemCode = '{itemCode}'";
         }
 
         public static string GetItems()

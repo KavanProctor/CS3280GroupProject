@@ -112,5 +112,22 @@ namespace CS3280GroupProject.Main
 
             // TODO: get the invoice number with something like this.searchWnd.GetSelected() and then fill the invoice form with data pertaining to that invoice if it is not null
         }
+
+        private void SaveInvoice(object sender, EventArgs ev)
+        {
+            if(this.invoiceDate.Text == "" || this.itemsBuffer.Count == 0){
+                MessageBox.Show("invalid input");
+                return;
+            }
+
+            int id;
+            if(Int32.TryParse(this.invoiceID.Text, out id)){
+                clsMainLogic.SaveInvoice(id, this.invoiceDate.Text, this.itemsBuffer);
+            }else{
+                id = clsMainLogic.CreateInvoice(this.invoiceDate.Text, this.itemsBuffer);
+                this.invoiceID.Text = id.ToString();
+            }
+
+        }
     }
 }
