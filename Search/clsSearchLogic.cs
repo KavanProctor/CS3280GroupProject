@@ -113,6 +113,14 @@ namespace CS3280GroupProject.Search
             return GenerateData(ds, iRetVal);
         }
 
+        public static List<clsInvoice> GetInvoices(DateTime invoiceDate, decimal totalCost)
+        {
+            int iRetVal = 0;
+            DataSet ds = clsDataAccess.ExecuteSQLStatement(clsSearchSQL.GetInvoices(invoiceDate, totalCost), ref iRetVal);
+
+            return GenerateData(ds, iRetVal);
+        }
+
         private static List<clsInvoice> GenerateData(DataSet ds, int iRetVal)
         {
             List<clsInvoice> invoices = new List<clsInvoice>();

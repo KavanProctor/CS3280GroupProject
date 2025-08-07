@@ -45,6 +45,11 @@ namespace CS3280GroupProject.Search
             return $"SELECT * FROM Invoices WHERE InvoiceDate = #{invoiceDate.ToString("MM/dd/yyyy")}#";
         }
 
+        public static string GetInvoices(DateTime invoiceDate, decimal totalCost)
+        {
+            return $"SELECT * FROM Invoices WHERE InvoiceDate = #{invoiceDate.ToString("MM/dd/yyyy")}# AND TotalCost = {totalCost}";
+        }
+
 
         public static string GetDistinctInvoiceNumbers()
         {

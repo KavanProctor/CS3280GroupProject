@@ -126,7 +126,35 @@ namespace CS3280GroupProject.Search
         /// <param name="e"></param>
         private void invoiceDates_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (invoiceDates.SelectedIndex == -1)
+                return;
 
+            filterInvoice.InvoiceDate = (DateTime)invoiceDates.SelectedItem;
+
+            // If both InvoiceID and TotalCost are set, filter the invoices
+            if (filterInvoice.InvoiceID != 0 && filterInvoice.TotalCost != 0)
+            {
+                invoices.ItemsSource = clsSearchLogic.GetInvoices(filterInvoice.InvoiceID, filterInvoice.InvoiceDate, filterInvoice.TotalCost);
+                return;
+            }
+            else
+            {
+                if (filterInvoice.InvoiceID != 0)
+                {
+                    invoices.ItemsSource = clsSearchLogic.GetInvoices(filterInvoice.InvoiceID, filterInvoice.InvoiceDate);
+                    return;
+                }
+                else if (filterInvoice.TotalCost != 0)
+                {
+                    invoices.ItemsSource = clsSearchLogic.GetInvoices(filterInvoice.InvoiceDate, filterInvoice.TotalCost);
+                    return;
+                }
+                else
+                {
+                    invoices.ItemsSource = clsSearchLogic.GetInvoices(filterInvoice.InvoiceDate);
+                    return;
+                }
+            }
         }
 
         /// <summary>
@@ -136,8 +164,38 @@ namespace CS3280GroupProject.Search
         /// <param name="e"></param>
         private void invoiceCosts_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (invoiceCosts.SelectedIndex == -1)
+                return;
 
+            filterInvoice.TotalCost = (decimal)invoiceCosts.SelectedItem;
+
+            // If both InvoiceID and TotalDate are set, filter the invoices
+            if (filterInvoice.InvoiceID != 0 && filterInvoice.InvoiceDate != DateTime.MinValue)
+            {
+                invoices.ItemsSource = clsSearchLogic.GetInvoices(filterInvoice.InvoiceID, filterInvoice.InvoiceDate, filterInvoice.TotalCost);
+                return;
+            }
+            else
+            {
+                if (filterInvoice.InvoiceID != 0)
+                {
+                    invoices.ItemsSource = clsSearchLogic.GetInvoices(filterInvoice.InvoiceID, filterInvoice.TotalCost);
+                    return;
+                }
+                else if (filterInvoice.InvoiceDate != DateTime.MinValue)
+                {
+                    invoices.ItemsSource = clsSearchLogic.GetInvoices(filterInvoice.InvoiceDate, filterInvoice.TotalCost);
+                    return;
+                }
+                else
+                {
+                    invoices.ItemsSource = clsSearchLogic.GetInvoices(filterInvoice.TotalCost);
+                    return;
+                }
+            }
         }
+
+        //TODO: Work on the Select Button functionality
 
         /// <summary>
         /// This handles the click event for the Select button.
@@ -157,7 +215,7 @@ namespace CS3280GroupProject.Search
                     this.selectedInvoice.InvoiceDate = selectedInvoice.InvoiceDate;
                     this.selectedInvoice.TotalCost = selectedInvoice.TotalCost;
                     // Close the search window
-                    this.Close();
+                    this.Close();  // Is this correct? Should it close the window to give it to another window?
                 }
                 else
                 {
