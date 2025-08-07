@@ -47,28 +47,43 @@ namespace CS3280GroupProject.Main
             this.Reset();
         }
 
-        private void Reset(){
+        private void Reset()
+        {
             this.items = clsMainLogic.GetItems();
-            this.itemSelection.Items.Clear();
-            this.items.ForEach(i => this.itemSelection.Items.Add(i.ItemCode));
 
             this.itemsBuffer.Clear();
 
             this.invoiceID.Text = "TBD";
 
-            this.invoiceItems.Items.Clear();
+            this.SyncUI();
+        }
+
+        private void RemoveItem(object sender, EventArgs ev)
+        {
+            Visual parent = VisualTreeHelper.GetParent((Button)sender) as Visual;
+            while(!(parent is DataGridRow)){
+                parent = VisualTreeHelper.GetParent(parent) as Visual;
+            }
+
+            int index = (parent as DataGridRow).GetIndex();
+            this.itemsBuffer.RemoveAt(index);
 
             this.SyncUI();
         }
 
-        private void SyncUI(){
+        private void SyncUI()
+        {
             this.cost = 0;
             foreach(clsItem item in this.itemsBuffer)
             {
                 this.cost += item.Cost;
             }
 
-            // TODO: update this.invoiceItems
+            this.invoiceItems.Items.Clear();
+            this.itemsBuffer.ForEach(i => this.invoiceItems.Items.Add(i));
+
+            this.itemSelection.Items.Clear();
+            this.items.ForEach(i => this.itemSelection.Items.Add(i.ItemCode));
 
             this.invoiceCost.Text = this.cost.ToString();
         }
