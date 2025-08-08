@@ -41,7 +41,8 @@ namespace CS3280GroupProject.Main
             return id;
         }
 
-        public static int GetMaxLineNum(int invoiceID){
+        public static int GetMaxLineNum(int invoiceID)
+        {
             return (int)ExecSQL(clsMainSQL.GetMaxLineNum(invoiceID)).Tables[0].Rows[0].ItemArray[0];
         }
 
@@ -71,8 +72,16 @@ namespace CS3280GroupProject.Main
             ExecSQL(clsMainSQL.UpdateCost(invoiceID, items.Aggregate((decimal)0, (a, b) => a + b.Cost)));
         }
 
-        // public void InvoiceSetItems(int invoiceID, string item);
-        // public Invoice GetInvoice(int invoiceID);
+        public static clsInvoice GetInvoice(int invoiceID)
+        {
+            var r = ExecSQL(clsMainSQL.GetInvoice(invoiceID)).Tables[0].Rows.OfType<DataRow>().ToList()[0];
+            return new clsInvoice()
+            {
+                InvoiceID=(int)r[0],
+                InvoiceDate=(DateTime)r[1],
+                TotalCost=(decimal)r[2],
+            };
+        }
 
         private static List<clsItem> ToItems(DataSet ds)
         {

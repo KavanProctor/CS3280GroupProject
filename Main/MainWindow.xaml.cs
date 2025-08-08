@@ -120,7 +120,16 @@ namespace CS3280GroupProject.Main
 
             this.Reset();
 
-            // TODO: use searchWnd.selectedInvoice.InvoiceID to edit invoice (how to check if one was actually selected?)
+            int id = searchWnd.selectedInvoice.InvoiceID;
+            if(id != 0){
+                clsInvoice invoice = clsMainLogic.GetInvoice(id);
+
+                this.invoiceID.Text = invoice.InvoiceID.ToString();
+                this.invoiceDate.SelectedDate = invoice.InvoiceDate;
+                this.itemsBuffer = clsMainLogic.GetInvoiceItems(id);
+
+                this.SyncUI();
+            }
         }
 
         private void SaveInvoice(object sender, EventArgs ev)

@@ -21,7 +21,7 @@ namespace CS3280GroupProject.Search
     /// </summary>
     public partial class SearchWindow : Window
     {
-        clsInvoice selectedInvoice;
+        public clsInvoice selectedInvoice;
         clsInvoice filterInvoice;
 
         public SearchWindow()
