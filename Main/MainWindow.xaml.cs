@@ -36,12 +36,9 @@ namespace CS3280GroupProject.Main
                 if(this.itemSelection.SelectedIndex < 0) return;
 
                 clsItem item = this.items[this.itemSelection.SelectedIndex];
-                if(!this.itemsBuffer.Any(i => i.ItemCode == item.ItemCode))
-                {
-                    this.itemsBuffer.Add(item);
+                this.itemsBuffer.Add(item);
 
-                    this.SyncUI();
-                }
+                this.SyncUI();
             };
 
             this.Reset();
