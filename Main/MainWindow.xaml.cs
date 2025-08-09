@@ -28,6 +28,8 @@ namespace CS3280GroupProject.Main
         private decimal cost = 0;
         private List<clsItem> itemsBuffer = new();
 
+        private bool editing = false;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -71,6 +73,11 @@ namespace CS3280GroupProject.Main
 
         private void SyncUI()
         {
+            this.invoiceDate.IsEnabled =  this.editing;
+            this.itemSection.IsEnabled =  this.editing;
+            this.editButton.IsEnabled  = !this.editing;
+            this.saveButton.IsEnabled  =  this.editing;
+
             this.cost = 0;
             foreach(clsItem item in this.itemsBuffer)
             {
@@ -88,7 +95,7 @@ namespace CS3280GroupProject.Main
 
         private bool WarnUser()
         {
-            if(this.invoiceDate.Text != "" || this.itemsBuffer.Count > 0){
+            if(this.editing){
                 var response = MessageBox.Show("The current invoice will be lost, do you wish to continue?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 return response == MessageBoxResult.Yes;
             }
@@ -97,7 +104,7 @@ namespace CS3280GroupProject.Main
 
         private void UpdateItems(object sender, EventArgs ev)
         {
-            if(!WarnUser()) return;
+            if(!this.WarnUser()) return;
 
             ItemWindow itemWnd = new ItemWindow();
             this.Hide();
@@ -108,7 +115,7 @@ namespace CS3280GroupProject.Main
         }
         private void SelectInvoice(object sender, EventArgs ev)
         {
-            if(!WarnUser()) return;
+            if(!this.WarnUser()) return;
 
             SearchWindow searchWnd = new SearchWindow();
             this.Hide();
@@ -125,8 +132,25 @@ namespace CS3280GroupProject.Main
                 this.invoiceDate.SelectedDate = invoice.InvoiceDate;
                 this.itemsBuffer = clsMainLogic.GetInvoiceItems(id);
 
+                this.editing = false;
                 this.SyncUI();
             }
+        }
+
+        private void StartInvoice(object sender, EventArgs ev)
+        {
+            if(!this.WarnUser()) return;
+
+            this.editing = true;
+            this.Reset();
+        }
+
+        private void EditInvoice(object sender, EventArgs ev)
+        {
+            if(this.editing) return;
+
+            this.editing = true;
+            this.SyncUI();
         }
 
         private void SaveInvoice(object sender, EventArgs ev)
@@ -144,6 +168,8 @@ namespace CS3280GroupProject.Main
                 this.invoiceID.Text = id.ToString();
             }
 
+            this.editing = false;
+            this.SyncUI();
         }
     }
 }

@@ -23,6 +23,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
                 <Label Grid.Column="0" Grid.Row="0" HorizontalContentAlignment="Right" Content="Invoice number"/>
@@ -32,7 +33,7 @@
                 <DatePicker x:Name="invoiceDate" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Width="100"/>
 
                 <GroupBox Grid.ColumnSpan="2" Grid.Row="2" Width="Auto" Header="Items">
-                    <StackPanel>
+                    <StackPanel x:Name="itemSection">
                         <DataGrid x:Name="invoiceItems" RowHeaderWidth="0" Height="150">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Item code" Binding="{Binding ItemCode}"/>
@@ -66,7 +67,9 @@
                 <Label Grid.Column="0" Grid.Row="3" HorizontalContentAlignment="Right" Content="Total cost"/>
                 <TextBox x:Name="invoiceCost" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Width="100" IsReadOnly="True"/>
 
-                <Button Click="SaveInvoice" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="4" Content="Save"/>
+                <Button Click="StartInvoice" Grid.Column="0" Grid.Row="4" Content="Create new"/>
+                <Button x:Name="editButton" Click="EditInvoice" Grid.Column="1" Grid.Row="4" Content="Edit"/>
+                <Button x:Name="saveButton" Click="SaveInvoice" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="5" Content="Save"/>
             </Grid>
         </GroupBox>
     </StackPanel>
