@@ -68,5 +68,38 @@ namespace CS3280GroupProject.Items
                 }
             }
         }
+        public List<int> GetInvoicesUsingItem(string itemCode)
+        {
+            var invoices = new List<int>();
+            string sql = $"SELECT DISTINCT InvoiceNum FROM LineItems WHERE ItemCode = '{itemCode}'";
+
+            using (var conn = new OleDbConnection(@"Provider=Microsoft.Jet.OLEDB.4.0;Data source=" + Directory.GetCurrentDirectory() + "\\Invoice.mdb"))
+            {
+                conn.Open();
+                using (var cmd = new OleDbCommand(sql, conn))
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader != null && reader.Read())
+                    {
+                        invoices.Add(Convert.ToInt32(reader["InvoiceNum"]));
+                    }
+                }
+            }
+            return invoices;
+        }
+
+        public void DeleteItem(string itemCode)
+        {
+            string sql = $"DELETE FROM ItemDesc WHERE ItemCode = '{itemCode}'";
+            using (var conn = new OleDbConnection(@"Provider=Microsoft.Jet.OLEDB.4.0;Data source=" + Directory.GetCurrentDirectory() + "\\Invoice.mdb"))
+            {
+                conn.Open();
+                using (var cmd = new OleDbCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
     }
 }

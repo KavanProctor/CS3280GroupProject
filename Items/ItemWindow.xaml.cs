@@ -51,8 +51,51 @@ namespace CS3280GroupProject.Items
 
         private void itemDeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            //Logic for what happens when they want to delete item
+            if (selectedItem == null)
+            {
+                MessageBox.Show("Please select an item to delete.");
+                return;
+            }
+
+            try
+            {
+                // Check usage
+                var usedOn = itemLogic.GetInvoicesUsingItem(selectedItem.ItemCode);
+                if (usedOn.Any())
+                {
+                    string list = string.Join(", ", usedOn);
+                    MessageBox.Show($"Cannot delete item '{selectedItem.ItemCode}' because it is used on invoice(s): {list}");
+                    return;
+                }
+
+                // Confirm
+                if (MessageBox.Show($"Delete item '{selectedItem.ItemCode}'?", "Confirm Delete", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+                    return;
+
+                // Delete and refresh
+                itemLogic.DeleteItem(selectedItem.ItemCode);
+                bHasItemBeenChanged = true;
+
+                itemDataGrid.ItemsSource = itemLogic.GetAllItems(); // refresh grid
+                selectedItem = null;
+
+                itemCodeTextBox.Clear();
+                itemDescriptionTextBox.Clear();
+                itemCostTextBox.Clear();
+
+                itemCodeTextBox.IsEnabled = false;
+                itemDescriptionTextBox.IsEnabled = false;
+                itemCostTextBox.IsEnabled = false;
+                itemSaveButton.IsEnabled = false;
+
+                MessageBox.Show("Item deleted.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error deleting item: " + ex.Message);
+            }
         }
+
 
         private void itemEditButton_Click(object sender, RoutedEventArgs e)
         {
