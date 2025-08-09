@@ -23,13 +23,30 @@ namespace CS3280GroupProject.Main
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// a list of items that should always be synced to the databse
+        /// </summary>
         private List<clsItem> items;
 
+        /// <summary>
+        /// the cost of the current invoice
+        /// </summary>
         private decimal cost = 0;
+
+        /// <summary>
+        /// a list of items that represents the items that are in the current invoice
+        /// </summary>
         private List<clsItem> itemsBuffer = new();
 
+        /// <summary>
+        /// tracks whether the user is editing or not
+        /// </summary>
         private bool editing = false;
 
+
+        /// <summary>
+        /// constructor
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
@@ -46,6 +63,9 @@ namespace CS3280GroupProject.Main
             this.Reset();
         }
 
+        /// <summary>
+        /// reset everything (except this.editing)
+        /// </summary>
         private void Reset()
         {
             this.items = clsMainLogic.GetItems();
@@ -58,6 +78,9 @@ namespace CS3280GroupProject.Main
             this.SyncUI();
         }
 
+        /// <summary>
+        /// click event for the remove button next to each item in the DataGrid
+        /// </summary>
         private void RemoveItem(object sender, EventArgs ev)
         {
             Visual parent = VisualTreeHelper.GetParent((Button)sender) as Visual;
@@ -71,6 +94,9 @@ namespace CS3280GroupProject.Main
             this.SyncUI();
         }
 
+        /// <summary>
+        /// sync the UI to the current state
+        /// </summary>
         private void SyncUI()
         {
             this.invoiceDate.IsEnabled =  this.editing;
@@ -93,6 +119,10 @@ namespace CS3280GroupProject.Main
             this.invoiceCost.Text = this.cost.ToString();
         }
 
+        /// <summary>
+        /// warn the user about losing data on the current invoice
+        /// </summary>
+        /// <returns>only true when user is okay with moving on</returns>
         private bool WarnUser()
         {
             if(this.editing){
@@ -102,6 +132,11 @@ namespace CS3280GroupProject.Main
             return true;
         }
 
+        /// <summary>
+        /// open a new window so that the user can edit the items in the database
+        /// <param name="sender">(unused)</param>
+        /// <param name="ev">(unused)</param>
+        /// </summary>
         private void UpdateItems(object sender, EventArgs ev)
         {
             if(!this.WarnUser()) return;
@@ -113,6 +148,12 @@ namespace CS3280GroupProject.Main
 
             this.Reset();
         }
+
+        /// <summary>
+        /// open a new window so that the user can search for invoices, and maybe pick one for editing
+        /// <param name="sender">(unused)</param>
+        /// <param name="ev">(unused)</param>
+        /// </summary>
         private void SelectInvoice(object sender, EventArgs ev)
         {
             if(!this.WarnUser()) return;
@@ -137,6 +178,11 @@ namespace CS3280GroupProject.Main
             }
         }
 
+        /// <summary>
+        /// start creating a brand new invoice
+        /// <param name="sender">(unused)</param>
+        /// <param name="ev">(unused)</param>
+        /// </summary>
         private void StartInvoice(object sender, EventArgs ev)
         {
             if(!this.WarnUser()) return;
@@ -145,6 +191,11 @@ namespace CS3280GroupProject.Main
             this.Reset();
         }
 
+        /// <summary>
+        /// edit the invoice that is currently being displayed
+        /// <param name="sender">(unused)</param>
+        /// <param name="ev">(unused)</param>
+        /// </summary>
         private void EditInvoice(object sender, EventArgs ev)
         {
             if(this.editing) return;
@@ -153,6 +204,11 @@ namespace CS3280GroupProject.Main
             this.SyncUI();
         }
 
+        /// <summary>
+        /// save the current invoice to the database
+        /// <param name="sender">(unused)</param>
+        /// <param name="ev">(unused)</param>
+        /// </summary>
         private void SaveInvoice(object sender, EventArgs ev)
         {
             if(this.invoiceDate.Text == "" || this.itemsBuffer.Count == 0){
